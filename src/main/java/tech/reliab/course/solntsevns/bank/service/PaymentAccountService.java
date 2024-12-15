@@ -10,4 +10,6 @@ public interface PaymentAccountService {
     void deposit(PaymentAccount account, double amount);
 
     boolean withdraw(PaymentAccount account, double amount);
+
+    PaymentAccount getPaymentAccount(Long id);
 }

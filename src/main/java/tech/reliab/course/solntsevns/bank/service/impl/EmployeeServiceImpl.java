@@ -3,12 +3,22 @@ package tech.reliab.course.solntsevns.bank.service.impl;
 import tech.reliab.course.solntsevns.bank.entity.Bank;
 import tech.reliab.course.solntsevns.bank.entity.BankOffice;
 import tech.reliab.course.solntsevns.bank.entity.Employee;
+import tech.reliab.course.solntsevns.bank.service.BankOfficeService;
 import tech.reliab.course.solntsevns.bank.service.EmployeeService;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class EmployeeServiceImpl implements EmployeeService {
+    private final Map<Long, Employee> employeesTable = new HashMap<>();
+    private final BankOfficeService bankOfficeService;
+
+    public EmployeeServiceImpl(BankOfficeService bankOfficeService) {
+        this.bankOfficeService = bankOfficeService;
+    }
+
     /**
      * Создает нового сотрудника.
      *
@@ -23,6 +33,10 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     public Employee createEmployee(String fullName, LocalDate dateOfBirth, String position, Bank bank, double salary, boolean canIssueLoans, BankOffice bankOffice) {
         Employee employee = new Employee(fullName, dateOfBirth, position, bank, salary, canIssueLoans, bankOffice);
+
+        employeesTable.put(employee.getId(), employee);
+        bankOfficeService.addEmployee(employee.getBankOffice().getId(), employee);
+
         return employee;
     }
 
@@ -39,6 +53,21 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     public Employee createEmployee(String fullName, LocalDate dateOfBirth, String position, Bank bank, double salary, boolean canIssueLoans) {
         Employee employee = new Employee(fullName, dateOfBirth, position, bank, salary, canIssueLoans);
+
+        employeesTable.put(employee.getId(), employee);
+        bankOfficeService.addEmployee(employee.getBankOffice().getId(), employee);
+
         return employee;
+    }
+
+    /**
+     * Получает сотрудника по ID.
+     *
+     * @param id ID сотрудника.
+     * @return Сотрудник с указанным ID или null, если не найден.
+     */
+    public Employee getEmployee(Long id) {
+        Employee employee = employeesTable.get(id);
+        return employeesTable.get(id);
     }
 }

@@ -8,17 +8,15 @@ import tech.reliab.course.solntsevns.bank.entity.User;
 import java.time.LocalDate;
 
 public interface UserService {
-    User createUser(String fullName, LocalDate dateOfBirth, String workplace);
+    User createUser(String fullName, LocalDate dateOfBirth, Bank bank, String workplace);
 
-    void addBankToUser(User user, Bank bank);
+    User getUser(Long id);
 
-    void addCreditAccountToUser(User user, CreditAccount creditAccount);
+    void addCreditAccount(Long userId, CreditAccount creditAccount);
 
-    void addPaymentAccountToUser(User user, PaymentAccount paymentAccount);
+    void addPaymentAccount(Long userId, PaymentAccount paymentAccount);
 
-    void deleteBankFromUser(User user, Bank bank);
+    void deleteCreditAccount(Long userId, CreditAccount creditAccount);
 
-    void deleteCreditAccountFromUser(User user, CreditAccount creditAccount);
-
-    void deletePaymentAccountToUser(User user, PaymentAccount paymentAccount);
+    void deletePaymentAccount(Long userId, PaymentAccount paymentAccount);
 }

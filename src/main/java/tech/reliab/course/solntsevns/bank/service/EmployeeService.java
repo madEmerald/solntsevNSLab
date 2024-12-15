@@ -11,4 +11,6 @@ public interface EmployeeService {
     Employee createEmployee(String fullName, LocalDate dateOfBirth, String position, Bank bank, double salary, boolean canIssueLoans, BankOffice bankOffice);
 
     Employee createEmployee(String fullName, LocalDate dateOfBirth, String position, Bank bank, double salary, boolean canIssueLoans);
+
+    Employee getEmployee(Long id);
 }

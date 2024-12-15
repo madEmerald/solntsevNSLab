@@ -1,14 +1,24 @@
 package tech.reliab.course.solntsevns.bank.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class BankOffice {
+    private static Long currentId = 0L;
     private Long id;
 
     private String name;
+
     private String address;
     private String status;
     private Bank bank;
     private boolean canPlaceAtm;
     private int numberOfATMs;
+    private int numberOfEmployees;
     private boolean canOfferLoan;
     private boolean canDispenseCash;
     private boolean canDepositCash;
@@ -16,6 +26,8 @@ public class BankOffice {
     private double rentCost;
 
     public BankOffice(String name, String address, Bank bank, boolean canPlaceAtm, boolean canOfferLoan, boolean canDispenseCash, boolean canDepositCash, double amountOfMoney, double rentCost) {
+        this.id = currentId++;
+
         this.name = name;
         this.address = address;
         this.bank = bank;
@@ -29,99 +41,19 @@ public class BankOffice {
         this.numberOfATMs = 0;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public boolean isCanPlaceAtm() {
-        return canPlaceAtm;
-    }
-
-    public int getNumberOfATMs() {
-        return numberOfATMs;
-    }
-
-    public boolean isCanOfferLoan() {
-        return canOfferLoan;
-    }
-
-    public boolean isCanDispenseCash() {
-        return canDispenseCash;
-    }
-
-    public boolean isCanDepositCash() {
-        return canDepositCash;
-    }
-
-    public double getAmountOfMoney() {
-        return amountOfMoney;
-    }
-
-    public double getRentCost() {
-        return rentCost;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setCanPlaceAtm(boolean canPlaceAtm) {
-        this.canPlaceAtm = canPlaceAtm;
-    }
-
-    public void setCanOfferLoan(boolean canOfferLoan) {
-        this.canOfferLoan = canOfferLoan;
-    }
-
-    public void setCanDispenseCash(boolean canDispenseCash) {
-        this.canDispenseCash = canDispenseCash;
-    }
-
-    public void setCanDepositCash(boolean canDepositCash) {
-        this.canDepositCash = canDepositCash;
-    }
-
-    public void setAmountOfMoney(double amountOfMoney) {
-        this.amountOfMoney = amountOfMoney;
-    }
-
-    public void setRentCost(double rentCost) {
-        this.rentCost = rentCost;
-    }
-
     public void addATM() {
         this.numberOfATMs++;
     }
 
     public void removeAtm() {
         this.numberOfATMs--;
+    }
+
+    public void addEmployee() {
+        this.numberOfEmployees++;
+    }
+
+    public void removeEmployee() {
+        this.numberOfEmployees--;
     }
 }

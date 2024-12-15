@@ -9,6 +9,8 @@ import tech.reliab.course.solntsevns.bank.entity.Employee;
 public interface BankAtmService {
     BankAtm createAtm(String name, Bank bank, BankOffice office, Employee servicingEmployee, boolean canDispenseCash, boolean canDepositCash, double amountOfMoney, double maintenanceCost);
 
+    BankAtm getAtm(Long id);
+
     void updateAtm(BankAtm atm);
 
     void updateAmountOfMoney(BankAtm atm, double amount);

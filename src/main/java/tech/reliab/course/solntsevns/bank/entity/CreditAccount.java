@@ -2,7 +2,15 @@ package tech.reliab.course.solntsevns.bank.entity;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class CreditAccount {
+    private static Long currentId = 0L;
     private Long id;
 
     private User user;
@@ -18,6 +26,8 @@ public class CreditAccount {
     private PaymentAccount paymentAccount;
 
     public CreditAccount(User user, Bank bank, LocalDate startDate, LocalDate endDate, int numberOfMonths, double loanAmount, double monthlyPayment, double interestRate, Employee issuingEmployee, PaymentAccount paymentAccount) {
+        this.id = currentId++;
+
         this.user = user;
         this.bank = bank;
         this.startDate = startDate;

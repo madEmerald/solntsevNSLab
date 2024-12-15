@@ -1,6 +1,14 @@
 package tech.reliab.course.solntsevns.bank.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class PaymentAccount {
+    private static Long currentId = 0L;
     private Long id;
     private User user;
 
@@ -8,36 +16,10 @@ public class PaymentAccount {
     private double balance;
 
     public PaymentAccount(User user, Bank bank) {
+        this.id = currentId++;
+
         this.user = user;
         this.bank = bank;
         this.balance = 0.0; // Начальное значение
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Bank getBankName() {
-        return bank;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setBankName(Bank bank) {
-        this.bank = bank;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 }

@@ -2,7 +2,15 @@ package tech.reliab.course.solntsevns.bank.entity;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class User {
+    private static Long currentId;
     private Long id;
 
     private String fullName;
@@ -10,36 +18,14 @@ public class User {
     private String workplace;
     private double monthlyIncome;
     private int creditScore;
+    private Bank bank;
 
-    public User(String fullName, LocalDate dateOfBirth, String workplace, double monthlyIncome, int creditScore) {
+    public User(String fullName, LocalDate dateOfBirth, Bank bank, String workplace, double monthlyIncome, int creditScore) {
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.workplace = workplace;
         this.monthlyIncome = monthlyIncome;
         this.creditScore = creditScore;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getWorkplace() {
-        return workplace;
-    }
-
-    public double getMonthlyIncome() {
-        return monthlyIncome;
-    }
-
-    public int getCreditScore() {
-        return creditScore;
+        this.bank = bank;
     }
 }

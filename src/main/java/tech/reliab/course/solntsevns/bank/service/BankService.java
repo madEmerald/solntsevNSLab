@@ -5,11 +5,19 @@ import tech.reliab.course.solntsevns.bank.entity.*;
 public interface BankService {
     Bank createBank(String name);
 
-    void addOfficeToBank(Bank bank, BankOffice office);
+    Bank getBank(Long id);
 
-    void addATMToBank(Bank bank, BankAtm atm);
+    void deleteBank(Long id);
 
-    void addEmployeeToBank(Bank bank, Employee employee);
+    void addOffice(Long bankId, BankOffice office);
 
-    void addUserToBank(Bank bank, User user);
+    void addEmployee(Long bankId, Employee employee);
+
+    void addUser(Long bankId, User user);
+
+    void deleteOffice(Long bankId, BankOffice office);
+
+    void deleteEmployee(Bank bank, Employee employee);
+
+    void deleteUser(Long bankId, User user);
 }

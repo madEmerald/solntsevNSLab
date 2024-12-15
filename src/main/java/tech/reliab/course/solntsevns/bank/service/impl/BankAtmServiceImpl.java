@@ -5,9 +5,20 @@ import tech.reliab.course.solntsevns.bank.entity.Bank;
 import tech.reliab.course.solntsevns.bank.entity.BankOffice;
 import tech.reliab.course.solntsevns.bank.entity.Employee;
 import tech.reliab.course.solntsevns.bank.service.BankAtmService;
+import tech.reliab.course.solntsevns.bank.service.BankOfficeService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class BankAtmServiceImpl implements BankAtmService {
+    private final Map<Long, BankAtm> atmsTable = new HashMap<>();
+    private final BankOfficeService bankOfficeService;
+
+    public BankAtmServiceImpl(BankOfficeService bankOfficeService) {
+        this.bankOfficeService = bankOfficeService;
+    }
+
     /**
      * Создает новый банкомат.
      *
@@ -23,10 +34,20 @@ public class BankAtmServiceImpl implements BankAtmService {
      */
     public BankAtm createAtm(String name, Bank bank, BankOffice office, Employee servicingEmployee, boolean canDispenseCash, boolean canDepositCash, double amountOfMoney, double maintenanceCost) {
         BankAtm atm = new BankAtm(name, office.getAddress(), bank, office, servicingEmployee, canDispenseCash, canDepositCash, amountOfMoney, maintenanceCost);
-        atm.setStatus(determineStatus(atm)); // Установка статуса
+        atmsTable.put(atm.getId(), atm);
+        bankOfficeService.addAtm(atm.getOffice().getId(), atm);
         return atm;
     }
 
+    /**
+     * Получает банкомат по ID.
+     *
+     * @param id идентификатор банкомата
+     * @return найденный BankAtmEntity
+     */
+    public BankAtm getAtm(Long id) {
+        return atmsTable.get(id);
+    }
 
     /**
      * Обновляет информацию о банкомате.
@@ -43,7 +64,7 @@ public class BankAtmServiceImpl implements BankAtmService {
     /**
      * Определяет статус банкомата на основе количества денег.
      *
-     * @param atm банкомат, статус которого нужно определить
+     * @param atm банкомат
      * @return статус банкомата
      */
     private String determineStatus(BankAtm atm) {
@@ -56,7 +77,7 @@ public class BankAtmServiceImpl implements BankAtmService {
     /**
      * Обновляет количество денег в банкомате.
      *
-     * @param atm банкомат, в котором нужно обновить количество денег
+     * @param atm банкомат
      * @param amount количество денег для обновления
      */
     public void updateAmountOfMoney(BankAtm atm, double amount) {

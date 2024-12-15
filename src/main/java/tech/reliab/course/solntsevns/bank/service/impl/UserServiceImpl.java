@@ -1,17 +1,24 @@
 package tech.reliab.course.solntsevns.bank.service.impl;
 
-import tech.reliab.course.solntsevns.bank.entity.CreditAccount;
-import tech.reliab.course.solntsevns.bank.entity.PaymentAccount;
-import tech.reliab.course.solntsevns.bank.entity.User;
-import tech.reliab.course.solntsevns.bank.entity.Bank;
+import tech.reliab.course.solntsevns.bank.entity.*;
+import tech.reliab.course.solntsevns.bank.service.BankService;
 import tech.reliab.course.solntsevns.bank.service.UserService;
 
 import java.time.LocalDate;
-import java.util.Random;
+import java.util.*;
 
 
 public class UserServiceImpl implements UserService {
     private Random random = new Random();
+    private final Map<Long, User> usersTable = new HashMap<>();
+    private final Map<Long, List<PaymentAccount>> paymentAccountsByUserIdTable = new HashMap<>();
+    private final Map<Long, List<CreditAccount>> creditAccountsByUserIdTable = new HashMap<>();
+    private final BankService bankService;
+
+    public UserServiceImpl(BankService bankService) {
+        this.bankService = bankService;
+    }
+
     /**
      * Создает нового клиента банка со сгенерированным доходом и кредитным рейтингом.
      *
@@ -20,10 +27,16 @@ public class UserServiceImpl implements UserService {
      * @param workplace место работы
      * @return созданный UserEntity
      */
-    public User createUser(String fullName, LocalDate dateOfBirth, String workplace) {
+    public User createUser(String fullName, LocalDate dateOfBirth, Bank bank, String workplace) {
         double monthlyIncome = generateRandomIncome(); // Генерация случайного дохода
         int creditScore = calculateCreditScore(monthlyIncome); // Расчет кредитного рейтинга
-        User user = new User(fullName, dateOfBirth, workplace, monthlyIncome, creditScore);
+        User user = new User(fullName, dateOfBirth, bank, workplace, monthlyIncome, creditScore);
+
+        usersTable.put(user.getId(), user);
+        paymentAccountsByUserIdTable.put(user.getId(), new ArrayList<>());
+        creditAccountsByUserIdTable.put(user.getId(), new ArrayList<>());
+        bankService.addUser(user.getBank().getId(), user);
+
         return user;
     }
 
@@ -66,62 +79,53 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * Добавляет банк в список банков пользователя.
-     *
-     * @param user пользователь, которому добавляется банк
-     * @param bank банк, который добавляется
-     */
-    public void addBankToUser(User user, Bank bank) {
-
+    public User getUser(Long id) {
+        return usersTable.get(id);
     }
 
     /**
      * Добавляет кредитный счет пользователю.
      *
-     * @param user пользователь, которому добавляется кредитный счет
+     * @param userId пользователя
      * @param creditAccount кредитный счет
      */
-    public void addCreditAccountToUser(User user, CreditAccount creditAccount) {
-
+    public void addCreditAccount(Long userId, CreditAccount creditAccount) {
+        List<CreditAccount> clientCreditAccounts = creditAccountsByUserIdTable.get(userId);
+        creditAccount.setUser(getUser(userId));
+        clientCreditAccounts.add(creditAccount);
     }
 
     /**
      * Добавляет платежный счет пользователю.
      *
-     * @param user пользователь, которому добавляется платежный счет
+     * @param userId пользователя
      * @param paymentAccount платежный счет
      */
-    public void addPaymentAccountToUser(User user, PaymentAccount paymentAccount) {
-
-    }
-
-    /**
-     * Удаляет указанный банк из списка банков пользователя.
-     *
-     * @param user пользователь, из которого удаляется банк
-     * @param bank банк, который нужно удалить из списка банков пользователя
-     */
-    public void deleteBankFromUser(User user, Bank bank) {
-
+    public void addPaymentAccount(Long userId, PaymentAccount paymentAccount) {
+        List<PaymentAccount> clientCreditAccounts = paymentAccountsByUserIdTable.get(userId);
+        paymentAccount.setUser(getUser(userId));
+        clientCreditAccounts.add(paymentAccount);
     }
 
     /**
      * Удаляет указанный кредитный счет из списка кредитных счетов пользователя.
      *
-     * @param user пользователь, у которого удаляется кредитный счет
-     * @param creditAccount кредитный счет, который нужно удалить из списка кредитных счетов пользователя
+     * @param userId пользователя
+     * @param creditAccount кредитный счет
      */
-    public void deleteCreditAccountFromUser(User user, CreditAccount creditAccount) {
+    public void deleteCreditAccount(Long userId, CreditAccount creditAccount) {
+        creditAccount.setUser(null);
+        creditAccountsByUserIdTable.get(userId).remove(creditAccount);
     }
 
     /**
      * Удаляет указанный платежный счет из списка платежных счетов пользователя.
      *
-     * @param user пользователь, у которого удаляется платежный счет
-     * @param paymentAccount платежный счет, который нужно удалить из списка платежных счетов пользователя
+     * @param userId пользователя
+     * @param paymentAccount платежный счет
      */
-    public void deletePaymentAccountToUser(User user, PaymentAccount paymentAccount) {
-
+    public void deletePaymentAccount(Long userId, PaymentAccount paymentAccount) {
+        paymentAccount.setUser(null);
+        paymentAccountsByUserIdTable.get(userId).remove(paymentAccount);
     }
 }

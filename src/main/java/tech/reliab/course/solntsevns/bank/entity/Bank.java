@@ -1,7 +1,14 @@
 package tech.reliab.course.solntsevns.bank.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class Bank {
+    private static Long currentId = 0L;
     private Long id;
 
     private String name;
@@ -15,59 +22,8 @@ public class Bank {
 
 
     public Bank(String name) {
+        this.id = currentId++;
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumberOfOffices() {
-        return numberOfOffices;
-    }
-
-    public int getNumberOfATMs() {
-        return numberOfATMs;
-    }
-
-    public int getNumberOfEmployees() {
-        return numberOfEmployees;
-    }
-
-    public int getNumberOfUsers() {
-        return numberOfUsers;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public double getTotalMoney() {
-        return totalMoney;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public void setTotalMoney(double totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
-    public void setInterestRate(double interestRate) {
-        this.interestRate = interestRate;
     }
 
     public void addAtm() {

@@ -1,0 +1,49 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyChainedComparisonsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoreConstantInTheMiddle" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N801" />
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="PyQt5.QtWidgets.clicked.connect" />
+          <option value="PyQt5.QtWidgets.stateChanged.connect" />
+          <option value="list.text" />
+          <option value="PyQt5.uic" />
+          <option value="progect.except_hook" />
+          <option value="list.get_color" />
+          <option value="list.can_move" />
+          <option value="list.attack_diag_line" />
+          <option value="list.can_attack" />
+          <option value="list.attack_straight_line" />
+          <option value="cv2.findContours" />
+          <option value="cv2.imread" />
+          <option value="cv2.cvtColor" />
+          <option value="cv2.COLOR_BGR2GRAY" />
+          <option value="cv2.threshold" />
+          <option value="cv2.THRESH_BINARY" />
+          <option value="cv2.erode" />
+          <option value="cv2.RETR_TREE" />
+          <option value="cv2.CHAIN_APPROX_NONE" />
+          <option value="cv2.boundingRect" />
+          <option value="cv2.rectangle" />
+          <option value="cv2.resize" />
+          <option value="cv2.INTER_AREA" />
+          <option value="tkinter.filedialog" />
+          <option value="dict.__getitem__" />
+          <option value="dict.classes" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
